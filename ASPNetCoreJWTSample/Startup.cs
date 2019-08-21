@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ASPNetCoreJWTSample.Middleware;
 using ASPNetCoreJWTSample.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -52,6 +53,7 @@ namespace ASPNetCoreJWTSample
             }
 
             app.UseAuthentication();
+            app.UseMiddleware<CustomAuthMiddleware>();
             app.UseMvc();
         }
     }

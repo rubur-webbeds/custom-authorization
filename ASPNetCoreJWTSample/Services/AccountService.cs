@@ -48,8 +48,7 @@ namespace ASPNetCoreJWTSample.Services
                 NotBefore = DateTime.UtcNow,
                 Expires = DateTime.UtcNow.AddMinutes(expiryDuration),
                 Subject = new ClaimsIdentity(new List<Claim> {
-                        new Claim("userid", user.Id.ToString()),
-                        new Claim("role", user.Role)
+                        new Claim("userid", user.Id.ToString())
                     }),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(signingKey), SecurityAlgorithms.HmacSha256Signature)
             };
