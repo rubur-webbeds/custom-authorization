@@ -48,7 +48,8 @@ namespace ASPNetCoreJWTSample.Services
                 NotBefore = DateTime.UtcNow,
                 Expires = DateTime.UtcNow.AddMinutes(expiryDuration),
                 Subject = new ClaimsIdentity(new List<Claim> {
-                        new Claim("userid", user.Id.ToString())
+                        new Claim("userid", user.Id.ToString()),
+                        new Claim(ClaimTypes.Email, user.Username)
                     }),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(signingKey), SecurityAlgorithms.HmacSha256Signature)
             };
@@ -56,6 +57,11 @@ namespace ASPNetCoreJWTSample.Services
             var jwtToken = jwtTokenHandler.CreateJwtSecurityToken(tokenDescriptor);
             var token = jwtTokenHandler.WriteToken(jwtToken);
             return token;
+        }
+
+        public IEnumerable<User> GetUsers()
+        {
+            return _users;
         }
     }
 }

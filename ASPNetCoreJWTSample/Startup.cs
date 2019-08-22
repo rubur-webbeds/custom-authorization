@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ASPNetCoreJWTSample.Middleware;
 using ASPNetCoreJWTSample.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -10,9 +6,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Toolfactory.Core.Authorization;
 
 namespace ASPNetCoreJWTSample
 {
@@ -28,6 +23,7 @@ namespace ASPNetCoreJWTSample
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<AccountService>();
+            services.AddSingleton<IAuthorizationRepository, UsersRepository>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
@@ -53,7 +49,7 @@ namespace ASPNetCoreJWTSample
             }
 
             app.UseAuthentication();
-            app.UseMiddleware<CustomAuthMiddleware>();
+            app.UseToolfactoryCoreAuthorization();
             app.UseMvc();
         }
     }

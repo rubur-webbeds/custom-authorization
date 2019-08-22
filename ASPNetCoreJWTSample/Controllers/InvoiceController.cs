@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -22,7 +23,7 @@ namespace ASPNetCoreJWTSample.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            var userIdClaim = HttpContext.User.Claims.Where(x => x.Type == "userid").SingleOrDefault();
+            var userIdClaim = HttpContext.User.Claims.Where(x => x.Type == ClaimTypes.Email).SingleOrDefault();
             return Ok($"Your User ID is {userIdClaim.Value} and you can create invoices!");
         }
 
