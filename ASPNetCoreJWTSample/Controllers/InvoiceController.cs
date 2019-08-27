@@ -27,7 +27,7 @@ namespace ASPNetCoreJWTSample.Controllers
             return Ok($"Your User ID is {userIdClaim.Value} and you can create invoices!");
         }
 
-        [Authorize(Roles = "Administrator")]
+        [Authorize]
         [HttpGet]
         public IActionResult Delete()
         {
